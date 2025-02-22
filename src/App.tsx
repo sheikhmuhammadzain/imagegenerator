@@ -49,39 +49,48 @@ interface SpotlightProps {
 
 const Spotlight = ({ className, fill }: SpotlightProps) => {
   return (
-    <svg
-      className={cn(
-        "animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0",
-        className
-      )}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 3787 2842"
-      fill="none">
-      <g filter="url(#filter)">
-        <ellipse
-          cx="1924.71"
-          cy="273.501"
-          rx="1924.71"
-          ry="273.501"
-          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-          fill={fill || "white"}
-          fillOpacity="0.21"></ellipse>
-      </g>
-      <defs>
-        <filter
-          id="filter"
-          x="0.860352"
-          y="0.838989"
-          width="3785.16"
-          height="2840.26"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8"></feGaussianBlur>
-        </filter>
-      </defs>
-    </svg>
+    <>
+      <svg
+        className={cn(
+          "animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0",
+          className
+        )}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 3787 2842"
+        fill="none">
+        <g filter="url(#filter)">
+          <ellipse
+            cx="1924.71"
+            cy="273.501"
+            rx="1924.71"
+            ry="273.501"
+            transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+            fill={fill || "white"}
+            fillOpacity="0.21"></ellipse>
+        </g>
+        <defs>
+          <filter
+            id="filter"
+            x="0.860352"
+            y="0.838989"
+            width="3785.16"
+            height="2840.26"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+            <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8"></feGaussianBlur>
+          </filter>
+        </defs>
+      </svg>
+      {/* Sun Beam Effect */}
+      <div className={cn(
+        "absolute z-[1] w-[50%] opacity-50 transition-opacity duration-500",
+        className,
+        "before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-yellow-500/10 before:to-transparent before:animate-beam",
+        "after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-orange-500/10 after:to-transparent after:animate-beam-slow"
+      )} />
+    </>
   );
 };
 
@@ -315,10 +324,10 @@ function App() {
       {/* Spotlight Effect */}
       <Spotlight 
         className={cn(
-          "top-[-20px] left-0 md:left-60 md:top-[-60px]",
-          theme === 'light' && 'opacity-40'
+          "top-[-20%] left-[-10%] h-[200%] transform rotate-12",
+          theme === 'light' ? 'opacity-40' : 'opacity-30'
         )} 
-        fill={theme === 'dark' ? 'white' : '#3b82f6'}
+        fill={theme === 'dark' ? 'white' : '#fbbf24'}
       />
 
       {/* Sidebar */}
@@ -515,10 +524,14 @@ function App() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className={cn(
-            "backdrop-blur-xl border p-6 transition-colors duration-300",
+            "backdrop-blur-xl border p-6 transition-colors duration-300 relative",
             theme === 'dark'
               ? "bg-black/50 border-white/10"
-              : "bg-white/80 border-gray-200 shadow-lg"
+              : "bg-white/80 border-gray-200 shadow-lg",
+            "after:absolute after:w-[80%] after:h-[80%] after:left-[10%] after:top-[10%] after:rounded-3xl after:z-[-1] after:opacity-30 after:blur-[100px]",
+            theme === 'dark'
+              ? "after:bg-blue-500/30"
+              : "after:bg-blue-200/50"
           )}>
             <div className="space-y-6">
               <div className="flex items-center justify-between">
@@ -706,10 +719,14 @@ function App() {
                   <CardItem
                     translateZ={50}
                     className={cn(
-                      "w-full aspect-square rounded-xl overflow-hidden",
+                      "w-full aspect-square rounded-xl overflow-hidden relative",
                       theme === 'dark'
                         ? "bg-black/50"
-                        : "bg-white/80"
+                        : "bg-white/80",
+                      "after:absolute after:w-[80%] after:h-[80%] after:left-[10%] after:top-[10%] after:rounded-3xl after:z-[-1] after:opacity-30 after:blur-[100px]",
+                      theme === 'dark'
+                        ? "after:bg-purple-500/30"
+                        : "after:bg-purple-200/50"
                     )}
                   >
                     <motion.div
@@ -732,7 +749,16 @@ function App() {
                 <CardBody className="relative group/card w-auto h-auto">
                   <CardItem
                     translateZ={50}
-                    className="w-full aspect-square rounded-xl overflow-hidden shadow-2xl"
+                    className={cn(
+                      "w-full aspect-square rounded-xl overflow-hidden relative",
+                      theme === 'dark'
+                        ? "bg-black/50"
+                        : "bg-white/80",
+                      "after:absolute after:w-[80%] after:h-[80%] after:left-[10%] after:top-[10%] after:rounded-3xl after:z-[-1] after:opacity-30 after:blur-[100px]",
+                      theme === 'dark'
+                        ? "after:bg-purple-500/30"
+                        : "after:bg-purple-200/50"
+                    )}
                   >
                     <motion.div
                       className="relative w-full h-full"
@@ -784,10 +810,14 @@ function App() {
                   <CardItem
                     translateZ={50}
                     className={cn(
-                      "w-full aspect-square rounded-xl overflow-hidden border border-dashed",
+                      "w-full aspect-square rounded-xl overflow-hidden border border-dashed relative",
                       theme === 'dark'
                         ? "border-white/10 bg-black/50"
-                        : "border-gray-200 bg-white/80"
+                        : "border-gray-200 bg-white/80",
+                      "after:absolute after:w-[80%] after:h-[80%] after:left-[10%] after:top-[10%] after:rounded-3xl after:z-[-1] after:opacity-30 after:blur-[100px]",
+                      theme === 'dark'
+                        ? "after:bg-purple-500/30"
+                        : "after:bg-purple-200/50"
                     )}
                   >
                     <motion.div 

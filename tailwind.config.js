@@ -8,6 +8,13 @@ export default {
     './src/**/*.{ts,tsx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       borderRadius: {
         lg: 'var(--radius)',
@@ -73,10 +80,43 @@ export default {
             height: '0',
           },
         },
+        spotlight: {
+          '0%': {
+            opacity: 0,
+            transform: 'translate(-72%, -62%) scale(0.5)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translate(-50%,-40%) scale(1)',
+          },
+        },
+        beam: {
+          '0%, 100%': {
+            opacity: 0.5,
+            transform: 'translateX(-10%) rotate(-65deg) translateY(-50%)'
+          },
+          '50%': {
+            opacity: 0.8,
+            transform: 'translateX(10%) rotate(-65deg) translateY(-50%)'
+          }
+        },
+        'beam-slow': {
+          '0%, 100%': {
+            opacity: 0.3,
+            transform: 'translateX(10%) rotate(-65deg) translateY(-50%)'
+          },
+          '50%': {
+            opacity: 0.6,
+            transform: 'translateX(-10%) rotate(-65deg) translateY(-50%)'
+          }
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        spotlight: 'spotlight 2s ease .75s 1 forwards',
+        beam: 'beam 4s ease-in-out infinite',
+        'beam-slow': 'beam-slow 6s ease-in-out infinite'
       },
     },
   },
