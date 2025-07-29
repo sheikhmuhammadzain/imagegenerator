@@ -201,6 +201,8 @@ const Testimonials = ({ theme }: { theme: 'dark' | 'light' }) => {
 
 // --- MAIN APP COMPONENT ---
 const STORAGE_KEY = 'sheikhoo_ai_history';
+const MAX_HISTORY_ITEMS = 10; // Limit to prevent localStorage overflow
+const MAX_STORAGE_SIZE = 4 * 1024 * 1024; // 4MB limit to be safe
 
 function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -233,7 +235,46 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(imageHistory));
+    try {
+      const historyData = JSON.stringify(imageHistory);
+      // Check if data size exceeds our limit
+      if (historyData.length > MAX_STORAGE_SIZE) {
+        // Keep only the most recent items that fit within the limit
+        const reducedHistory = imageHistory.slice(0, Math.floor(MAX_HISTORY_ITEMS / 2));
+        const reducedData = JSON.stringify(reducedHistory);
+        localStorage.setItem(STORAGE_KEY, reducedData);
+        setImageHistory(reducedHistory);
+        toast({
+          title: "Storage Optimized",
+          description: `History reduced to ${reducedHistory.length} items to prevent storage overflow`,
+        });
+      } else {
+        localStorage.setItem(STORAGE_KEY, historyData);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === 'QuotaExceededError') {
+        // Emergency cleanup - remove oldest items
+        const emergencyHistory = imageHistory.slice(0, 5);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(emergencyHistory));
+          setImageHistory(emergencyHistory);
+          toast({
+            title: "Storage Full",
+            description: "History automatically reduced to prevent app crashes",
+            variant: "destructive",
+          });
+        } catch (secondError) {
+          // If still failing, clear history entirely
+          localStorage.removeItem(STORAGE_KEY);
+          setImageHistory([]);
+          toast({
+            title: "Storage Cleared",
+            description: "History cleared due to storage limitations",
+            variant: "destructive",
+          });
+        }
+      }
+    }
   }, [imageHistory]);
 
   useEffect(() => {
@@ -330,7 +371,12 @@ function App() {
             timestamp: Date.now(),
             settings: { ...settings }
           };
-          setImageHistory(prev => [newImage, ...prev]);
+          
+          // Limit history size to prevent storage overflow
+          setImageHistory(prev => {
+            const newHistory = [newImage, ...prev];
+            return newHistory.slice(0, MAX_HISTORY_ITEMS);
+          });
 
           toast({
             title: "Success",
