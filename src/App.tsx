@@ -102,7 +102,7 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
     transition={{ duration: 0.8, ease: "easeInOut" }}
   >
     <h1 className={cn(
-      "text-5xl md:text-7xl font-bold mb-5 pb-5 tracking-tighter font-inter" ,
+      "text-5xl md:text-7xl font-bold mb-5 pb-5 tracking-tighter font-inter",
       theme === 'dark'
         ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400"
         : "text-gray-900"
@@ -340,7 +340,7 @@ function App() {
       // NOTE: This part is client-side and exposes the API key.
       // In a real production app, this should be a backend call.
       const ai = new GoogleGenAI({
-        apiKey: 'AIzaSyBnlHotdhJQhl7tqMMRZYZVrYEA5xxrTyw' // Replace with your actual key if needed
+        apiKey: import.meta.env.GEMINI_API_KEY // Replace with your actual key if needed
       });
 
       const response = await ai.models.generateContent({
@@ -371,7 +371,7 @@ function App() {
             timestamp: Date.now(),
             settings: { ...settings }
           };
-          
+
           // Limit history size to prevent storage overflow
           setImageHistory(prev => {
             const newHistory = [newImage, ...prev];
