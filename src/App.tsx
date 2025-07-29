@@ -7,7 +7,6 @@ import { CardContainer, CardBody, CardItem } from "@/components/ui/card-3d";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Add as PlusIcon,
-  Remove as MinusIcon,
   Image as ImageIcon,
   Download as DownloadIcon,
   Share as ShareIcon,
@@ -103,7 +102,7 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
     transition={{ duration: 0.8, ease: "easeInOut" }}
   >
     <h1 className={cn(
-      "text-5xl md:text-7xl font-bold mb-4",
+      "text-5xl md:text-7xl font-bold mb-5 pb-5 tracking-tighter font-inter" ,
       theme === 'dark'
         ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400"
         : "text-gray-900"
@@ -111,7 +110,7 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
       Create Stunning Visuals with AI
     </h1>
     <p className={cn(
-      "max-w-2xl mx-auto mb-8 text-lg",
+      "max-w-2xl mx-auto mb-8 text-lg tracking-tight",
       theme === 'dark' ? "text-gray-400" : "text-gray-600"
     )}>
       Turn your text prompts into breathtaking images. SheikhImg is a powerful AI image generator that brings your imagination to life with just a few clicks.
@@ -134,15 +133,31 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
 
 const ImageGallery = () => {
   const exampleImages = [
-    "https://images.unsplash.com/photo-1682687220198-88d0bde744d1?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1682687220208-22d71b26f593?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1682687220166-4f4bf47c5936?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1682687220159-1e7a57a1d17a?q=80&w=2070&auto=format&fit=crop",
+    "https://videos.openai.com/vg-assets/assets%2Ftask_01k19rv3b4fx8s3cxmmjgedqmf%2F1753748569_img_1.webp?st=2025-07-29T18%3A12%3A05Z&se=2025-08-04T19%3A12%3A05Z&sks=b&skt=2025-07-29T18%3A12%3A05Z&ske=2025-08-04T19%3A12%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=guOu8%2B1%2BKMc7EZOdIcAJwnHgJDV20Vu5Vlkv0t3PAec%3D&az=oaivgprodscus",
+    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1b6z571ft68mfhxy4pd7tke%2F1753796890_img_0.webp?st=2025-07-29T18%3A12%3A05Z&se=2025-08-04T19%3A12%3A05Z&sks=b&skt=2025-07-29T18%3A12%3A05Z&ske=2025-08-04T19%3A12%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=QjP96zkG4CLIVH5lxXr%2Bv335kLZjHiixaja4Vp0b%2BHs%3D&az=oaivgprodscus",
+    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1b6xc4zf7jbds4kaadweppq%2F1753796925_img_0.webp?st=2025-07-29T18%3A12%3A32Z&se=2025-08-04T19%3A12%3A32Z&sks=b&skt=2025-07-29T18%3A12%3A32Z&ske=2025-08-04T19%3A12%3A32Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=n53wgJ72%2FdJHMOrA1DZyUE8jmlVmwmAlgKEbe%2BV5D%2BY%3D&az=oaivgprodscus",
+    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1bch8n0ekp9pv68b0eyjfqt%2F1753802805_img_1.webp?st=2025-07-29T17%3A15%3A09Z&se=2025-08-04T18%3A15%3A09Z&sks=b&skt=2025-07-29T17%3A15%3A09Z&ske=2025-08-04T18%3A15%3A09Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=Lk3qxUUxsJJSM8UqDP23i%2F0pP82XQOWqOd3On4xy8GM%3D&az=oaivgprodscus",
   ];
 
   return (
-    <div className="relative z-10 ">
-  
+    <div className="relative z-10 mt-16">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {exampleImages.map((src, index) => (
+          <motion.div
+            key={index}
+            className="rounded-lg overflow-hidden shadow-lg"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 * index }}
+          >
+            <img
+              src={src}
+              alt={`Example AI-generated image ${index + 1}`}
+              className="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300"
+            />
+          </motion.div>
+        ))}
+      </div>
     </div>
   )
 };
@@ -294,6 +309,10 @@ function App() {
           responseModalities: [Modality.TEXT, Modality.IMAGE],
         },
       });
+
+      if (!response?.candidates?.[0]?.content?.parts) {
+        throw new Error('Invalid response format from AI service');
+      }
 
       const parts = response.candidates[0].content.parts;
       let imageUrl = '';
@@ -522,7 +541,18 @@ function App() {
                       <div className="flex items-center gap-2 justify-between">
                         <div className="text-xs text-gray-400">{new Date(img.timestamp).toLocaleDateString()}</div>
                         <div className="flex gap-1">
-                          {/* Action buttons */}
+                          <Button variant="secondary" size="icon" onClick={() => reloadPrompt(img)} className={cn("h-7 w-7 bg-white/10 hover:bg-white/20", theme === 'dark' ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
+                            <ReloadIcon className="h-3 w-3" />
+                          </Button>
+                          <Button variant="secondary" size="icon" onClick={() => downloadImage(img.url)} className={cn("h-7 w-7 bg-white/10 hover:bg-white/20", theme === 'dark' ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
+                            <DownloadIcon className="h-3 w-3" />
+                          </Button>
+                          <Button variant="secondary" size="icon" onClick={() => shareImage(img.url)} className={cn("h-7 w-7 bg-white/10 hover:bg-white/20", theme === 'dark' ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
+                            <ShareIcon className="h-3 w-3" />
+                          </Button>
+                          <Button variant="secondary" size="icon" onClick={() => deleteFromHistory(img.id)} className={cn("h-7 w-7 bg-white/10 hover:bg-white/20", theme === 'dark' ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900")}>
+                            <DeleteIcon className="h-3 w-3" />
+                          </Button>
                         </div>
                       </div>
                     </div>
