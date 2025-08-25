@@ -133,10 +133,10 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
 
 const ImageGallery = () => {
   const exampleImages = [
-    "https://videos.openai.com/vg-assets/assets%2Ftask_01k19rv3b4fx8s3cxmmjgedqmf%2F1753748569_img_1.webp?st=2025-07-29T18%3A12%3A05Z&se=2025-08-04T19%3A12%3A05Z&sks=b&skt=2025-07-29T18%3A12%3A05Z&ske=2025-08-04T19%3A12%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=guOu8%2B1%2BKMc7EZOdIcAJwnHgJDV20Vu5Vlkv0t3PAec%3D&az=oaivgprodscus",
-    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1b6z571ft68mfhxy4pd7tke%2F1753796890_img_0.webp?st=2025-07-29T18%3A12%3A05Z&se=2025-08-04T19%3A12%3A05Z&sks=b&skt=2025-07-29T18%3A12%3A05Z&ske=2025-08-04T19%3A12%3A05Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=QjP96zkG4CLIVH5lxXr%2Bv335kLZjHiixaja4Vp0b%2BHs%3D&az=oaivgprodscus",
-    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1b6xc4zf7jbds4kaadweppq%2F1753796925_img_0.webp?st=2025-07-29T18%3A12%3A32Z&se=2025-08-04T19%3A12%3A32Z&sks=b&skt=2025-07-29T18%3A12%3A32Z&ske=2025-08-04T19%3A12%3A32Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=n53wgJ72%2FdJHMOrA1DZyUE8jmlVmwmAlgKEbe%2BV5D%2BY%3D&az=oaivgprodscus",
-    "https://videos.openai.com/vg-assets/assets%2Ftask_01k1bch8n0ekp9pv68b0eyjfqt%2F1753802805_img_1.webp?st=2025-07-29T17%3A15%3A09Z&se=2025-08-04T18%3A15%3A09Z&sks=b&skt=2025-07-29T17%3A15%3A09Z&ske=2025-08-04T18%3A15%3A09Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=Lk3qxUUxsJJSM8UqDP23i%2F0pP82XQOWqOd3On4xy8GM%3D&az=oaivgprodscus",
+    "https://cdn.pixabay.com/photo/2024/02/21/11/34/ai-generated-8587505_1280.png",
+    "https://cdn.pixabay.com/photo/2024/03/16/20/35/ai-generated-8637800_1280.jpg",
+    "https://cdn.pixabay.com/photo/2025/08/14/15/12/ai-9774332_1280.jpg",
+    "https://cdn.pixabay.com/photo/2023/11/02/00/19/ai-generated-8359510_1280.jpg",
   ];
 
   return (
@@ -339,8 +339,12 @@ function App() {
     try {
       // NOTE: This part is client-side and exposes the API key.
       // In a real production app, this should be a backend call.
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error("Missing VITE_GEMINI_API_KEY. Add it to your .env and restart the dev server.");
+      }
       const ai = new GoogleGenAI({
-        apiKey: import.meta.env.GEMINI_API_KEY // Replace with your actual key if needed
+        apiKey
       });
 
       const response = await ai.models.generateContent({
