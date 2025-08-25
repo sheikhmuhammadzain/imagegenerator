@@ -102,15 +102,15 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
     transition={{ duration: 0.8, ease: "easeInOut" }}
   >
     <h1 className={cn(
-      "text-5xl md:text-7xl font-bold mb-5 pb-5 tracking-tighter font-inter",
+      "text-5xl md:text-7xl font-bold mb-6 tracking-tighter font-sans",
       theme === 'dark'
-        ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400"
-        : "text-gray-900"
+        ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400"
+        : "bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-600"
     )}>
       Create Stunning Visuals with AI
     </h1>
     <p className={cn(
-      "max-w-2xl mx-auto mb-8 text-lg tracking-tight",
+      "max-w-2xl mx-auto mb-10 text-xl tracking-tight",
       theme === 'dark' ? "text-gray-400" : "text-gray-600"
     )}>
       Turn your text prompts into breathtaking images. SheikhImg is a powerful AI image generator that brings your imagination to life with just a few clicks.
@@ -118,10 +118,10 @@ const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
     <Button
       size="lg"
       className={cn(
-        "transition-transform transform hover:scale-105",
+        "rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl transition-transform transform hover:scale-105",
         theme === 'dark'
           ? "bg-white text-black hover:bg-gray-200"
-          : "bg-blue-600 text-white hover:bg-blue-700"
+          : "bg-gray-900 text-white hover:bg-gray-800"
       )}
       onClick={() => document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' })}
     >

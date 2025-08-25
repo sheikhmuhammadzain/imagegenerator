@@ -22,7 +22,7 @@ export const Hero = ({ theme, onGetStarted }: HeroProps) => {
           ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400"
           : "text-gray-900"
       )}>
-        Create Stunning Visuals with AI
+        Create Stunning Visuals with A
       </h1>
       <p className={cn(
         "max-w-2xl mx-auto mb-8 text-lg",

@@ -62,6 +62,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground m-0 min-h-screen w-full;
+    @apply bg-background text-foreground m-0 min-h-screen w-full font-sans antialiased;
   }
 }
