@@ -11,8 +11,6 @@
 /dist
 
 # Environment files
-.env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -28,7 +26,6 @@ yarn-error.log*
 *.swp
 *.swo
 .DS_Store
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -60,3 +57,4 @@ out/
 
 # Local Netlify folder
 .netlify
+config.bat
