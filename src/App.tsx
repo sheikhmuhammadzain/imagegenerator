@@ -19,7 +19,10 @@ import {
   LinkedIn as LinkedInIcon,
   Language as WebsiteIcon,
   DarkMode as DarkModeIcon,
-  LightMode as LightModeIcon
+  LightMode as LightModeIcon,
+  Bolt as BoltIcon,
+  AutoAwesome as SparklesIcon,
+  Security as ShieldIcon
 } from '@mui/icons-material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { cn } from "@/lib/utils";
@@ -94,42 +97,73 @@ const Spotlight = ({ className, fill }: SpotlightProps) => (
   </>
 );
 
-const Hero = ({ theme }: { theme: 'dark' | 'light' }) => (
-  <motion.div
-    className="text-center relative z-10"
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8, ease: "easeInOut" }}
-  >
-    <h1 className={cn(
-      "text-5xl md:text-7xl font-bold mb-6 tracking-tighter font-sans",
-      theme === 'dark'
-        ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400"
-        : "bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-600"
-    )}>
-      Create Stunning Visuals with AI
-    </h1>
-    <p className={cn(
-      "max-w-2xl mx-auto mb-10 text-xl tracking-tight",
-      theme === 'dark' ? "text-gray-400" : "text-gray-600"
-    )}>
-      Turn your text prompts into breathtaking images. SheikhImg is a powerful AI image generator that brings your imagination to life with just a few clicks.
-    </p>
-    <Button
-      size="lg"
-      className={cn(
-        "rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl transition-transform transform hover:scale-105",
-        theme === 'dark'
-          ? "bg-white text-black hover:bg-gray-200"
-          : "bg-gray-900 text-white hover:bg-gray-800"
-      )}
-      onClick={() => document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' })}
+const Hero = ({ theme, onUsePrompt, onGetStarted }: { theme: 'dark' | 'light'; onUsePrompt: (text: string) => void; onGetStarted: () => void }) => {
+  const suggestions = [
+    "Futuristic city at dusk, ultra-detailed",
+    "Portrait of a cyberpunk samurai, neon",
+    "Surreal landscape of floating islands",
+  ];
+
+  return (
+    <motion.div
+      className="text-center relative z-10"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      <ImageIcon className="mr-2" />
-      Start Creating for Free
-    </Button>
-  </motion.div>
-);
+      <div className={cn(
+        "inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full text-xs font-medium ring-1",
+        theme === 'dark' ? "bg-white/5 ring-white/15 text-white/90" : "bg-gray-100 ring-gray-200 text-gray-700"
+      )}>
+        <SparklesIcon fontSize="small" className="opacity-80" />
+        New • Gemini 2.0
+      </div>
+      <h1 className={cn(
+        "text-5xl md:text-7xl font-bold mb-6 tracking-tighter font-sans",
+        theme === 'dark'
+          ? "bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-400"
+          : "bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-600"
+      )}>
+        Create Stunning Visuals with AI
+      </h1>
+      <p className={cn(
+        "max-w-2xl mx-auto mb-10 text-xl tracking-tight",
+        theme === 'dark' ? "text-gray-400" : "text-gray-600"
+      )}>
+        Turn your text prompts into breathtaking images. SheikhImg is a powerful AI image generator that brings your imagination to life with just a few clicks.
+      </p>
+      <Button
+        size="lg"
+        className={cn(
+          "rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl transition-transform transform hover:scale-105",
+          theme === 'dark'
+            ? "bg-white text-black hover:bg-gray-200"
+            : "bg-gray-900 text-white hover:bg-gray-800"
+        )}
+        onClick={onGetStarted}
+      >
+        <ImageIcon className="mr-2" />
+        Start Creating for Free
+      </Button>
+      <p className={cn("mt-4 text-sm", theme === 'dark' ? "text-gray-400" : "text-gray-600")}>Trusted by 1k+ creators</p>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+        {suggestions.map((s, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onUsePrompt(s)}
+            className={cn(
+              "px-3 py-1.5 rounded-full text-sm ring-1 transition-colors",
+              theme === 'dark' ? "bg-white/5 ring-white/15 hover:bg-white/10 text-white/90" : "bg-gray-100 ring-gray-200 hover:bg-gray-200 text-gray-700"
+            )}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
 
 const ImageGallery = () => {
   const exampleImages = [
@@ -160,6 +194,43 @@ const ImageGallery = () => {
       </div>
     </div>
   )
+};
+
+const FeatureGrid = ({ theme }: { theme: 'dark' | 'light' }) => {
+  const features = [
+    { title: "Lightning fast", desc: "Generate visuals in seconds.", Icon: BoltIcon },
+    { title: "Studio quality", desc: "Crisp, detailed outputs.", Icon: SparklesIcon },
+    { title: "Privacy-first", desc: "Prompts stay on your device.", Icon: ShieldIcon },
+  ];
+
+  return (
+    <section className="relative z-10 mt-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {features.map(({ title, desc, Icon }, i) => (
+          <Card
+            key={i}
+            className={cn(
+              "p-6 transition-all hover:shadow-xl border",
+              theme === 'dark' ? "bg-black/50 border-white/10 hover:border-white/20" : "bg-white/80 border-gray-200 hover:border-gray-300"
+            )}
+          >
+            <div className="flex items-start gap-4">
+              <div className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-lg",
+                theme === 'dark' ? "bg-white/10" : "bg-gray-100"
+              )}>
+                <Icon fontSize="small" className="opacity-80" />
+              </div>
+              <div>
+                <h3 className={cn("font-semibold", theme === 'dark' ? "text-white" : "text-gray-900")}>{title}</h3>
+                <p className={cn("text-sm mt-1", theme === 'dark' ? "text-gray-400" : "text-gray-600")}>{desc}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 const Testimonials = ({ theme }: { theme: 'dark' | 'light' }) => {
@@ -461,10 +532,10 @@ function App() {
       />
 
       {/* Header */}
-      <header className="w-full max-w-7xl mx-auto flex justify-between items-center p-4 relative z-20">
+      <header className="w-full max-w-7xl mx-auto flex justify-between items-center p-4 z-30 sticky top-0 backdrop-blur-md supports-[backdrop-filter]:bg-white/5 dark:supports-[backdrop-filter]:bg-black/20 border-b border-white/10">
         <div className="flex items-center gap-2">
           <ImageIcon className={cn("h-8 w-8", theme === 'dark' ? "text-white" : "text-blue-600")} />
-          <h1 className="text-2xl font-bold">SheikhImg</h1>
+          <h1 className={cn("text-2xl font-bold bg-clip-text text-transparent", theme === 'dark' ? "bg-gradient-to-r from-white to-gray-400" : "bg-gradient-to-r from-gray-900 to-gray-600")}>SheikhImg</h1>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -482,8 +553,17 @@ function App() {
 
       {/* Main Content */}
       <main className="w-full max-w-7xl mx-auto px-4 mt-16 flex flex-col gap-16">
-        <Hero theme={theme} />
+        <Hero
+          theme={theme}
+          onUsePrompt={(text) => {
+            setPrompt(text);
+            document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          onGetStarted={() => document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' })}
+        />
         <ImageGallery />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-300/70 dark:via-white/20 to-transparent my-12" />
+        <FeatureGrid theme={theme} />
 
         {/* Generator Section */}
         <div id="generator" className="mt-16 pt-16">
